@@ -19,6 +19,12 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Constants.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controller.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Setup.py">
       <SubType>Code</SubType>
     </Compile>
