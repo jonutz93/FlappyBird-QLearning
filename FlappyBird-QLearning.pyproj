@@ -25,9 +25,15 @@
     <Compile Include="Controller.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Preprocessing.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Setup.py">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="QLearning\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

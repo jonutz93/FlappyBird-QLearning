@@ -1,8 +1,11 @@
+#this works only on win32
 import ctypes
 import time
-import Constants
+import win32con
 from win32gui import GetWindowText, GetForegroundWindow
 
+#internal imports
+import Constants
 SendInput = ctypes.windll.user32.SendInput
 
 # C struct redefinitions 
@@ -58,5 +61,13 @@ def ReleaseKey(hexKeyCode):
         x = Input( ctypes.c_ulong(1), ii_ )
         ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
         time.sleep(1/Constants.FPS)
-
-
+def Initialize():
+    hwndMain = win32gui.FindWindow(None, Constants.GameName)
+    win32gui.SetWindowPos(
+                    hwndMain, win32con.HWND_TOPMOST, 0, 0, 0, 0,
+                    win32con.SWP_NOSIZE | win32con.SWP_NOMOVE)
+    win32gui.MoveWindow(hwndMain, -5, -5, Constants.WIDTH, Constants.HEIGHT, True)
+    #Set the WndProc to our function
+    oldWndProc = win32gui.SetWindowLong(hwndMain,
+                                        win32con.GWL_WNDPROC,
+                                        self.MyWndProc)
