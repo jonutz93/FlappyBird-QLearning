@@ -25,7 +25,16 @@
     <Compile Include="Controller.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Preprocessing.py">
+    <Compile Include="Preprocessing\Preprocessing.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Preprocessing\DigitsRecognition.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Preprocessing\Pyteseser.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Preprocessing\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Setup.py">
@@ -33,6 +42,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Preprocessing\" />
     <Folder Include="QLearning\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

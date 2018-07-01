@@ -1,5 +1,9 @@
 #constants such as the name of the game window, FPS
 GameName = "FlappyBird"
+GameDirectory = "D:/FlappyBird-QLearning/FlapPyBird"
+LaunchCommand = "D:/FlappyBird-QLearning/startGame.bat"
+GameScoreNumberAssets = "FlapPyBird/assets/sprites/"
+GameOver = "gameover.png"
 FPS = 30
 WIDTH = 288
 HEIGHT = 512

@@ -3,9 +3,13 @@ import ctypes
 import time
 import win32con
 from win32gui import GetWindowText, GetForegroundWindow
-
+import win32gui
+import os
+import subprocess
+import asyncio
 #internal imports
 import Constants
+import sys
 SendInput = ctypes.windll.user32.SendInput
 
 # C struct redefinitions 
@@ -61,13 +65,65 @@ def ReleaseKey(hexKeyCode):
         x = Input( ctypes.c_ulong(1), ii_ )
         ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
         time.sleep(1/Constants.FPS)
+
+#this is work in progress.
+#It should somehow disable the movement of the game window
+#
+oldWndProc = {}
+def MyWndProc(self, hWnd, msg, wParam, lParam):
+         # Display what we've got.
+         print (self.msgdict.get(msg), msg, wParam, lParam)
+         
+         # Restore the old WndProc.  Notice the use of wxin32api
+         # instead of win32gui here.  This is to avoid an error due to
+         # not passing a callable object.
+         if msg == win32con.WM_DESTROY: 
+             win32api.SetWindowLong(self.GetHandle(), 
+                                    win32con.GWL_WNDPROC, 
+                                    self.oldWndProc) 
+         if msg == win32con.WM_SYSCOMMAND:
+             print ("kappa")
+             if wParam ==  win32con.SC_MOVE:
+                 print("no kappa")
+                 return
+         # Pass all messages (in this case, yours may be different) on
+         # to the original WndProc
+         return win32gui.CallWindowProc(self.oldWndProc,
+                                        hWnd, msg, wParam, lParam)
+
+def RaiseWindowNamed(nameRe):
+  # start by getting a list of all the windows:
+  cb = lambda x,y: y.append(x)
+  wins = []
+  win32gui.EnumWindows(cb,wins)
+
+  # now check to see if any match our regexp:
+  tgtWin = -1
+  for win in wins:
+    txt = win32gui.GetWindowText(win)
+    if nameRe == txt:
+      tgtWin=win
+      break
+
+  if tgtWin>=0:
+    win32gui.SetForegroundWindow(tgtWin)
 def Initialize():
+    # open the game process
+    #the window should be set on the top left
+    proc = subprocess.Popen(Constants.LaunchCommand, shell=True,
+             stdin=None, stdout=None, stderr=None, close_fds=True)
     hwndMain = win32gui.FindWindow(None, Constants.GameName)
-    win32gui.SetWindowPos(
-                    hwndMain, win32con.HWND_TOPMOST, 0, 0, 0, 0,
-                    win32con.SWP_NOSIZE | win32con.SWP_NOMOVE)
+    while hwndMain == 0:
+        #The game is not running
+        #wait for it to start running
+        hwndMain = win32gui.FindWindow(None, Constants.GameName)
+        time.sleep(1/Constants.FPS)
+    win32gui.SetWindowPos(hwndMain, win32con.HWND_TOPMOST, 0, 0, 0, 0, False)
     win32gui.MoveWindow(hwndMain, -5, -5, Constants.WIDTH, Constants.HEIGHT, True)
+    RaiseWindowNamed(Constants.GameName)
+    #win32gui.SetForegroundWindow(hwndMain)
     #Set the WndProc to our function
     oldWndProc = win32gui.SetWindowLong(hwndMain,
                                         win32con.GWL_WNDPROC,
-                                        self.MyWndProc)
+                                        MyWndProc)
+    return hwndMain
