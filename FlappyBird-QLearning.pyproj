@@ -37,11 +37,16 @@
     <Compile Include="Preprocessing\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="QLearning\NeuralNetwork.py" />
+    <Compile Include="QLearning\__init__.py" />
     <Compile Include="Setup.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utils\Logger.py" />
+    <Compile Include="Utils\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Utils\" />
     <Folder Include="Preprocessing\" />
     <Folder Include="QLearning\" />
   </ItemGroup>
