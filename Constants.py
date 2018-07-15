@@ -7,6 +7,7 @@ GameOver = "gameover.png"
 FPS = 30
 WIDTH = 288
 HEIGHT = 512
+RENDER = True
 #posible inputs according to http://www.gamespp.com/directx/directInputKeyboardScanCodes.html
 #for flappy birds the only posible input is W for jump
 W = 0x11
