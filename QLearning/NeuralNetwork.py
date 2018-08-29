@@ -2,15 +2,16 @@ import tensorflow as tf
 import numpy
 import Utils.Logger
 import random
+import Constants
 class Brain(object):
     """description of class"""
     def __init__(self,id):
         #parameters
-        self.n_input = 4
-        self.n_hidden = 5
-        self.n_output = 1
-        self.learning_rate = 0.1
-        self.epochs = 0
+        self.n_input = Constants.inputLayer
+        self.n_hidden = Constants.hiddenLyaer
+        self.n_output = Constants.outputLayer
+        self.learning_rate = Constants.learningRate
+        self.epochs = Constants.epochs
         self.setup()
         self.id = id
     def setup(self):
@@ -67,7 +68,7 @@ class Brain(object):
         Logger.Logger.Log("Bird id is "+str(self.id))
         self.printWeights()
     def randomWeights(self):
-        #internal weights. Are generated random for now. I hjave to generated them here otherwise are generated at each iteration we have new numbers.
+        #internal weights. Are generated random for now. I have to generated them here otherwise are generated at each iteration we have new numbers.
         #last colomn represents the bias
         weight1 =numpy.random.uniform(low=-1.,high=1.,size=(self.n_input, self.n_hidden)).astype(numpy.float32)
         weight2 = numpy.random.uniform(low=-1.,high=1.,size=(self.n_hidden, self.n_output)).astype(numpy.float32)
@@ -95,19 +96,8 @@ class Brain(object):
        Logger.Logger.Log("bias2")
        Logger.Logger.Log(numpy.array2string(self.b2.eval(self.session)))
 
-    def Think(self, yBirdPosition, pipesXPosition, upperPipeY, lowerPipeY):
-        x_data = numpy.array([
-        [yBirdPosition,pipesXPosition,upperPipeY,lowerPipeY]])
-        y_data = numpy.array([
-        [1]])
-        #Logger.Logger.Log(numpy.array2string(x_data))
-        #self.session.run(self.init)
-        #answer = tf.equal(tf.floor(self.hy + 0.5), self.Y)
-        legitAnswer=self.session.run([self.hy], feed_dict={self.X: x_data, self.Y: y_data})
-        #because reasons?
-        answer = legitAnswer[0][0][0]
-        #Logger.Logger.Log("Answer")
-        #Logger.Logger.Log(str(answer))
+    def CalculateQValues(self, input):
+        legitAnswer=self.session.run([self.net], feed_dict={self.X: input})
         return answer
     def mutate_w_with_percent_change(self,p, add_sub_rand=True):
         #considering its 2d array

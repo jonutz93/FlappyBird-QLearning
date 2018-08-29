@@ -13,4 +13,16 @@ RENDER = True
 W = 0x11
 inputsList = [W]
 
+#Neural network parameters
+inputLayer = 4
+hiddenLyaer = 5
+outputLayer = 1
+learningRate = 0.1
+epochs = 0
+
+#logging variables
+useFileLogging = False;
+useConsoleLogging = True;
+
+
 

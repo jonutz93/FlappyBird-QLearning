@@ -9,6 +9,7 @@ import subprocess
 import asyncio
 #internal imports
 import Constants
+import Utils.Logger
 import sys
 SendInput = ctypes.windll.user32.SendInput
 
@@ -72,7 +73,7 @@ def ReleaseKey(hexKeyCode):
 oldWndProc = {}
 def MyWndProc(self, hWnd, msg, wParam, lParam):
          # Display what we've got.
-         print (self.msgdict.get(msg), msg, wParam, lParam)
+         Utils.Logger.Logger.Log(self.msgdict.get(msg), msg, wParam, lParam)
          
          # Restore the old WndProc.  Notice the use of wxin32api
          # instead of win32gui here.  This is to avoid an error due to
@@ -82,9 +83,7 @@ def MyWndProc(self, hWnd, msg, wParam, lParam):
                                     win32con.GWL_WNDPROC, 
                                     self.oldWndProc) 
          if msg == win32con.WM_SYSCOMMAND:
-             print ("kappa")
              if wParam ==  win32con.SC_MOVE:
-                 print("no kappa")
                  return
          # Pass all messages (in this case, yours may be different) on
          # to the original WndProc

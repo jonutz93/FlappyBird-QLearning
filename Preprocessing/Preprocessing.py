@@ -64,8 +64,11 @@ def screen_record():
     # WIDTH*HEIGHT windowed mode
     printscreen =  np.array(ImageGrab.grab(bbox=(0,25,Constants.WIDTH-12.5,Constants.HEIGHT-20)))
     miniImage = printscreen[50:150,0:Constants.WIDTH];
-    
     updateReward(getScreenScore(miniImage));
+    #change to gray
+    printscreen = cv2.cvtColor(printscreen, cv2.COLOR_BGR2GRAY)
+    #half the image size
+    printscreen = cv2.resize(printscreen, (0,0), fx=0.5, fy=0.5) 
     if Constants.RENDER == True:
         winname = "OpenCV Render"
         cv2.namedWindow(winname)   
