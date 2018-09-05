@@ -21,7 +21,7 @@ learningRate = 0.1
 epochs = 0
 
 #replay memory parameters
-memorySize=10;
+memorySize=100;
 
 #logging variables
 useFileLogging = True;

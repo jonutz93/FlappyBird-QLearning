@@ -277,16 +277,16 @@ class Brain(object):
         print("\tMax epochs: {0:.1f}".format(max_epochs))
 
         # Prepare the probability distribution for sampling the replay-memory.
-        replay_memory.prepare_sampling_prob(batch_size=batch_size)
+        #replay_memory.prepare_sampling_prob(batch_size=batch_size)
 
         # Number of optimization iterations corresponding to one epoch.
-        iterations_per_epoch = replay_memory.num_used / batch_size
+        iterations_per_epoch = batch_size
 
         # Minimum number of iterations to perform.
         min_iterations = int(iterations_per_epoch * min_epochs)
 
         # Maximum number of iterations to perform.
-        max_iterations = int(iterations_per_epoch * max_epochs)
+        max_iterations = int(replay_memory.memorySize /10)
 
         # Buffer for storing the loss-values of the most recent batches.
         loss_history = np.zeros(100, dtype=float)
@@ -296,11 +296,10 @@ class Brain(object):
             # from the replay-memory. These are the Q-values that we
             # want the Neural Network to be able to estimate.
             state_batch, q_values_batch = replay_memory.random_batch()
-
             # Create a feed-dict for inputting the data to the TensorFlow graph.
             # Note that the learning-rate is also in this feed-dict.
-            feed_dict = {self.x: state_batch,
-                         self.q_values_new: q_values_batch,
+            feed_dict = {self.x: [state_batch],
+                         self.q_values_new: [q_values_batch],
                          self.learning_rate: learning_rate}
 
             # Perform one optimization step and get the loss-value.
@@ -319,7 +318,7 @@ class Brain(object):
             pct_epoch = i / iterations_per_epoch
             msg = "\tIteration: {0} ({1:.2f} epoch), Batch loss: {2:.4f}, Mean loss: {3:.4f}"
             msg = msg.format(i, pct_epoch, loss_val, loss_mean)
-            print_progress(msg)
+            print(msg)
 
             # Stop the optimization if we have performed the required number
             # of iterations and the loss-value is sufficiently low.
@@ -327,4 +326,4 @@ class Brain(object):
                 break
 
         # Print newline.
-        print()
+        self.SaveCheckpoint()

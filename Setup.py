@@ -25,7 +25,8 @@ if __name__ == '__main__':
             if replayMemory.isFull():
                 replayMemory.printReplays()
                 replayMemory.updateQValues();
-                #replayMemory.clearMemory()
+                network.optimize(replayMemory)
+                replayMemory.clearMemory()
 
             continue
         state = np.dstack([image])
