@@ -14,14 +14,17 @@ W = 0x11
 inputsList = [W]
 
 #Neural network parameters
-inputLayer = 4
+inputLayer = 32292
 hiddenLyaer = 5
-outputLayer = 1
+outputLayer = 2
 learningRate = 0.1
 epochs = 0
 
+#replay memory parameters
+memorySize=10;
+
 #logging variables
-useFileLogging = False;
+useFileLogging = True;
 useConsoleLogging = True;
 
 

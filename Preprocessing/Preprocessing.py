@@ -5,7 +5,6 @@ import time
 import imutils
 import skimage.transform
 import sys
-import pytesseract
 import time
 
 import Constants
@@ -44,8 +43,9 @@ def getScreenScore(image):
         for pt in zip(*loc[::-1]):
             numbers[pt[0]] = i
     numbers = sorted(numbers.items(), key=lambda x: x[0])
-    scoreNumber = 0
+    scoreNumber = -1
     if len(numbers) > 0:
+        scoreNumber = 0
         for key, value in numbers:
             scoreNumber = (scoreNumber*10) +value
     return scoreNumber
@@ -55,6 +55,8 @@ def updateReward(newReward):
         reward = newReward
     if newReward == 0 and reward !=0:
         reward = 0
+    if newReward == -1:
+        reward = -1
 def getScore():
     global reward
     return reward;
