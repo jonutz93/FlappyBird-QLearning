@@ -38,6 +38,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="QLearning\NeuralNetwork.py" />
+    <Compile Include="QLearning\ReplayMemory.py" />
     <Compile Include="QLearning\__init__.py" />
     <Compile Include="Setup.py">
       <SubType>Code</SubType>
