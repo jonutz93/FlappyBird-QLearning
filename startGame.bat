@@ -1,2 +1,2 @@
-cd D:/FlappyBird-QLearning/FlapPyBird
-python D:/FlappyBird-QLearning/FlapPyBird/flappy.py
+cd D:/Dizertatie/FlappyBird-QLearning/FlapPyBird
+python flappy.py

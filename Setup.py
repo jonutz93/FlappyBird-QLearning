@@ -18,6 +18,6 @@ if __name__ == '__main__':
         if score == 0 and previousScore != 0: 
             Utils.Logger.Logger.Log("End of episode")
             previousScore = score
-        #Controller.PressKey(0x11)
-        #Controller.ReleaseKey(0x11)
+        Controller.PressKey(0x11)
+        Controller.ReleaseKey(0x11)
 

@@ -1,7 +1,7 @@
 #constants such as the name of the game window, FPS
 GameName = "FlappyBird"
 GameDirectory = "D:/FlappyBird-QLearning/FlapPyBird"
-LaunchCommand = "D:/FlappyBird-QLearning/startGame.bat"
+LaunchCommand = "D:/Dizertatie/FlappyBird-QLearning/startGame.bat"
 GameScoreNumberAssets = "FlapPyBird/assets/sprites/"
 GameOver = "gameover.png"
 FPS = 30
@@ -19,6 +19,10 @@ hiddenLyaer = 5
 outputLayer = 1
 learningRate = 0.1
 epochs = 0
+
+#qlearning parameters
+maxMemory = 100
+discount = 0.9
 
 #logging variables
 useFileLogging = False;
