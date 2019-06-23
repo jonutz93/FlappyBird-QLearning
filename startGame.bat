@@ -1,2 +1,2 @@
-cd D:/Dizertatie/FlappyBird-QLearning/FlapPyBird
-python flappy.py
+cd "../2048-python"
+python puzzle.py

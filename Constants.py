@@ -1,12 +1,12 @@
 #constants such as the name of the game window, FPS
-GameName = "FlappyBird"
+GameName = "2048"
 GameDirectory = "D:/FlappyBird-QLearning/FlapPyBird"
 LaunchCommand = "D:/Dizertatie/FlappyBird-QLearning/startGame.bat"
 GameScoreNumberAssets = "FlapPyBird/assets/sprites/"
 GameOver = "gameover.png"
 FPS = 30
-WIDTH = 288
-HEIGHT = 512
+WIDTH = 900
+HEIGHT = 700
 RENDER = True
 #posible inputs according to http://www.gamespp.com/directx/directInputKeyboardScanCodes.html
 #for flappy birds the only posible input is W for jump
@@ -22,7 +22,7 @@ epochs = 0
 
 #replay memory parameters
 memorySize=100;
-maxMemory = 10;
+maxMemory = 100;
 discount = 0.9
 
 #logging variables

@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import ImageGrab
+from PIL import Image
 import cv2
 import time
 import imutils
@@ -7,6 +8,7 @@ import skimage.transform
 import sys
 import time
 
+import pytesseract
 import Constants
 
 templates = [None]*10
@@ -60,25 +62,38 @@ def updateReward(newReward):
 def getScore():
     global reward
     return reward;
-def screen_record(): 
-    global reward
+counter = 0
+def DrawImage(image):
+     if Constants.RENDER == True:
+        winname = "OpenCV Render"
+        cv2.namedWindow(winname)   
+        cv2.moveWindow(winname, Constants.WIDTH,0)
+
+        cv2.imshow(winname,image)
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            cv2.destroyAllWindows()
+def ScreenRecord2048():
+    matrix = open('../2048-python/output.txt').read()
+    matrix = [item.split() for item in matrix.split('\n')[:-1]]
+    return matrix
+def ScreenRecordFlappyBirds(): 
+    global reward, counter
     last_time = time.time()
     # WIDTH*HEIGHT windowed mode
     printscreen =  np.array(ImageGrab.grab(bbox=(0,25,Constants.WIDTH-12.5,Constants.HEIGHT-20)))
+    printscreen = cv2.cvtColor(printscreen, cv2.COLOR_BGR2GRAY)
+    #half the image size
+    printscreen = cv2.resize(printscreen, (0,0), fx=0.5, fy=0.5) 
     miniImage = printscreen[50:150,0:Constants.WIDTH];
+    counter = counter+1
+    #cv2.imwrite('images/test' + str(counter)+'.png', miniImage)
+    #cv2.imwrite('images2/test' + str(counter)+'.png', printscreen)
     updateReward(getScreenScore(miniImage));
     #change to gray
     printscreen = cv2.cvtColor(printscreen, cv2.COLOR_BGR2GRAY)
     #half the image size
     printscreen = cv2.resize(printscreen, (0,0), fx=0.5, fy=0.5) 
-    if Constants.RENDER == True:
-        winname = "OpenCV Render"
-        cv2.namedWindow(winname)   
-        cv2.moveWindow(winname, Constants.WIDTH,0)
-
-        cv2.imshow(winname,printscreen)
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            cv2.destroyAllWindows()
+    DrawImage(DrawImage)
     return printscreen
 
 

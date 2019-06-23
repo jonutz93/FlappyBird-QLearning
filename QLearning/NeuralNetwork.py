@@ -286,7 +286,7 @@ class Brain(object):
         min_iterations = int(iterations_per_epoch * min_epochs)
 
         # Maximum number of iterations to perform.
-        max_iterations = int(replay_memory.memorySize /10)
+        max_iterations = int(len(replay_memory.memory) /10)
 
         # Buffer for storing the loss-values of the most recent batches.
         loss_history = np.zeros(100, dtype=float)
@@ -295,7 +295,9 @@ class Brain(object):
             # Randomly sample a batch of states and target Q-values
             # from the replay-memory. These are the Q-values that we
             # want the Neural Network to be able to estimate.
-            state_batch, q_values_batch = replay_memory.random_batch()
+            randomState = replay_memory.getRandomBatch()
+            state_batch= randomState.state
+            q_values_batch = randomState.qValues
             # Create a feed-dict for inputting the data to the TensorFlow graph.
             # Note that the learning-rate is also in this feed-dict.
             feed_dict = {self.x: [state_batch],

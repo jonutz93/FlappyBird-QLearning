@@ -4,7 +4,7 @@ import sys
 
 import pygame
 from pygame.locals import *
-
+import time
 
 FPS = 30
 SCREENWIDTH  = 288
@@ -244,6 +244,7 @@ def mainGame(movementInfo):
                                upperPipes, lowerPipes)
         if crashTest[0]:
             movementInfo = showWelcomeAnimation()
+            time.sleep(1)
             mainGame(movementInfo)
 
         # check for score
