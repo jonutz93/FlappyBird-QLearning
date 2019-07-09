@@ -73,8 +73,18 @@ def DrawImage(image):
         if cv2.waitKey(25) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
 def ScreenRecord2048():
-    matrix = open('../2048-python/output.txt').read()
-    matrix = [item.split() for item in matrix.split('\n')[:-1]]
+    global reward, counter
+    input = open('../2048-python/output.txt').read()
+    matrix = [item.split() for item in input.split('\n')[:-1]]
+    if not matrix:
+        reward = -1
+    else :
+        reward = -1
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                value = int(matrix[i][j])
+                if value > reward:
+                    reward = int(matrix[i][j])
     return matrix
 def ScreenRecordFlappyBirds(): 
     global reward, counter

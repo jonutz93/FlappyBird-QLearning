@@ -10,15 +10,28 @@ HEIGHT = 700
 RENDER = True
 #posible inputs according to http://www.gamespp.com/directx/directInputKeyboardScanCodes.html
 #for flappy birds the only posible input is W for jump
-W = 0x11
-inputsList = [W]
+key_W = 0x11
+key_A = 0x1E
+key_D = 0x20
+key_S = 0x1F
 
 #Neural network parameters
-inputLayer = 32292
+inputLayer = 16
 hiddenLyaer = 5
-outputLayer = 2
+outputLayer = 4
 learningRate = 0.1
 epochs = 0
+''' flappy birds
+#image size
+state_height = 234
+# Width of each image-frame in the state.
+state_width = 138
+'''
+
+#image size
+state_height = 4
+# Width of each image-frame in the state.
+state_width = 4
 
 #replay memory parameters
 memorySize=100;

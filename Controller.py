@@ -66,7 +66,9 @@ def ReleaseKey(hexKeyCode):
         x = Input( ctypes.c_ulong(1), ii_ )
         ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
         time.sleep(1/Constants.FPS)
-
+def PressAndReleaseKey(hexKeyCode):
+    PressKey(hexKeyCode)
+    ReleaseKey(hexKeyCode)
 #this is work in progress.
 #It should somehow disable the movement of the game window
 #
@@ -106,6 +108,14 @@ def RaiseWindowNamed(nameRe):
 
   if tgtWin>=0:
     win32gui.SetForegroundWindow(tgtWin)
+
+def CloseWindow(hwndMain):
+    win32gui.PostMessage(hwndMain,win32con.WM_CLOSE,0,0)
+    while hwndMain != 0:
+        #The game is not running
+        #wait for it to start running
+        hwndMain = win32gui.FindWindow(None, Constants.GameName)
+        time.sleep(1/Constants.FPS)
 def Initialize():
     # open the game process
     #the window should be set on the top left
