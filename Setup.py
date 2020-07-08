@@ -23,12 +23,6 @@ if __name__ == '__main__':
     while 1==1:
         image = Preprocessing.Preprocessing.ScreenRecord2048();
         score = Preprocessing.Preprocessing.getScore();
-        if score != -1:
-            #if the game did not end we skip some frames for effiency
-            framesCount = framesCount + 1
-            if(framesCount == 4):
-                framesCount = 0
-                #continue
         if(previousState != None):
             gameEnded = False
             if score == -1:
@@ -58,7 +52,7 @@ if __name__ == '__main__':
         framesCount = framesCount+1
         action, epsilon = epsilon_greedy.get_action(q_values=qvalues,
                                                              iteration = framesCount,
-                                                             training=True)
+                                                             training=False)
         previousState = QLearning.ReplayMemory.State(state, qvalues, action, score,False)
         if(action == 0):
             Controller.PressAndReleaseKey(Constants.key_A)

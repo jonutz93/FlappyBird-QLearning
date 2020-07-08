@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1d7d6f20-a107-4a8e-96b1-c2e27cf2ed52}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>Setup.py</StartupFile>
+    <StartupFile>snakeClass.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -43,6 +43,7 @@
     <Compile Include="Setup.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="snakeClass.py" />
     <Compile Include="Utils\Logger.py" />
     <Compile Include="Utils\__init__.py" />
   </ItemGroup>

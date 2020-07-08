@@ -164,21 +164,13 @@ class EpsilonGreedy:
 
 class Brain(object):
     """description of class"""
-    def __init__(self,id):
+    def __init__(self,id, state_height, state_width):
         #parameters
-        self.n_input = Constants.inputLayer
-        self.n_hidden = Constants.hiddenLyaer
-        self.n_output = Constants.outputLayer
         self.learning_rate = Constants.learningRate
         self.epochs = Constants.epochs
-        self.setup()
+        self.setup(state_height, state_width)
         self.id = id
-    def setup(self):
-        # Height of each image-frame in the state.
-        state_height = Constants.state_height
-
-        # Width of each image-frame in the state.
-        state_width = Constants.state_width
+    def setup(self, state_height, state_width):
         # Shape of the state-array.
         state_shape = [state_height, state_width, 1]
         num_actions = Constants.outputLayer
@@ -263,23 +255,23 @@ class Brain(object):
         net = self.x
 
         # First convolutional layer.
-        net = tf.layers.conv2d(inputs=net, name='layer_conv1',
-                               filters=16, kernel_size=3, strides=2,
-                               padding=padding,
-                               kernel_initializer=init, activation=activation)
-
-        # Second convolutional layer.
-        net = tf.layers.conv2d(inputs=net, name='layer_conv2',
-                               filters=32, kernel_size=3, strides=2,
-                               padding=padding,
-                               kernel_initializer=init, activation=activation)
-
-        # Third convolutional layer.
-        net = tf.layers.conv2d(inputs=net, name='layer_conv3',
-                               filters=64, kernel_size=3, strides=1,
-                               padding=padding,
-                               kernel_initializer=init, activation=activation)
-
+        #net = tf.layers.conv2d(inputs=net, name='layer_conv1',
+        #                       filters=16, kernel_size=3, strides=2,
+        #                       padding=padding,
+        #                       kernel_initializer=init, activation=activation)
+        #
+        ## Second convolutional layer.
+        #net = tf.layers.conv2d(inputs=net, name='layer_conv2',
+        #                       filters=32, kernel_size=3, strides=2,
+        #                       padding=padding,
+        #                       kernel_initializer=init, activation=activation)
+        #
+        ## Third convolutional layer.
+        #net = tf.layers.conv2d(inputs=net, name='layer_conv3',
+        #                       filters=64, kernel_size=3, strides=1,
+        #                       padding=padding,
+        #                       kernel_initializer=init, activation=activation)
+        
         # Flatten output of the last convolutional layer so it can
         # be input to a fully-connected (aka. dense) layer.
         # TODO: For some bizarre reason, this function is not yet in tf.layers
@@ -444,16 +436,16 @@ class Brain(object):
         min_iterations = int(iterations_per_epoch * min_epochs)
 
         # Maximum number of iterations to perform.
-        max_iterations = int(len(replay_memory.memory) /10)
+        max_iterations = 1 #int(len(replay_memory.memory) /10)
 
         # Buffer for storing the loss-values of the most recent batches.
         loss_history = np.zeros(100, dtype=float)
 
-        for i in range(max_iterations):
+        for i in range(len(replay_memory.memory)):
             # Randomly sample a batch of states and target Q-values
             # from the replay-memory. These are the Q-values that we
             # want the Neural Network to be able to estimate.
-            randomState = replay_memory.getRandomBatch()
+            randomState = replay_memory.memory[i]
             state_batch= randomState.state
             q_values_batch = randomState.qValues
             # Create a feed-dict for inputting the data to the TensorFlow graph.
@@ -487,3 +479,24 @@ class Brain(object):
 
         # Print newline.
         self.SaveCheckpoint()
+
+    def get_count_states(self):
+        """
+        Get the number of states that has been processed in the game-environment.
+        This is not used by the TensorFlow graph. It is just a hack to save and
+        reload the counter along with the checkpoint-file.
+        """
+        return self.session.run(self.count_states)
+
+    def get_count_episodes(self):
+        """
+        Get the number of episodes that has been processed in the game-environment.
+        """
+        return self.session.run(self.count_episodes)
+
+    def increase_count_states(self):
+        """
+        Increase the number of states that has been processed
+        in the game-environment.
+        """
+        return self.session.run(self.count_states_increase)

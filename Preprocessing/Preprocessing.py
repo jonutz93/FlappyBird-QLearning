@@ -79,12 +79,10 @@ def ScreenRecord2048():
     if not matrix:
         reward = -1
     else :
-        reward = -1
+        reward = 0
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
-                value = int(matrix[i][j])
-                if value > reward:
-                    reward = int(matrix[i][j])
+                reward = reward + int(matrix[i][j])
     return matrix
 def ScreenRecordFlappyBirds(): 
     global reward, counter

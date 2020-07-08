@@ -16,11 +16,11 @@ key_D = 0x20
 key_S = 0x1F
 
 #Neural network parameters
-inputLayer = 16
-hiddenLyaer = 5
+inputLayer = 160
+hiddenLyaer = 50
 outputLayer = 4
 learningRate = 0.1
-epochs = 0
+epochs = 20
 ''' flappy birds
 #image size
 state_height = 234
@@ -28,18 +28,23 @@ state_height = 234
 state_width = 138
 '''
 
-#image size
+'''  2048
 state_height = 4
-# Width of each image-frame in the state.
+state_width = 4
+'''
+#sdsadsa
+'''
+'''
+
+state_height = 4
 state_width = 4
 
 #replay memory parameters
-memorySize=100;
-maxMemory = 100;
+maxMemory = 1000;
 discount = 0.9
 
 #logging variables
-useFileLogging = True;
+useFileLogging = False;
 useConsoleLogging = True;
 
 
